@@ -66,17 +66,8 @@ public class Camera3D {
         position.set(x, y, z);
         updateViewMatrix();
     }
-    private Vector3f getForward() {
-        Vector3f forward = new Vector3f();
 
-        forward.x = (float) Math.cos(Math.toRadians(yaw)) * (float) Math.cos(Math.toRadians(pitch));
-        forward.y = (float) Math.sin(Math.toRadians(pitch));
-        forward.z = (float) Math.sin(Math.toRadians(yaw)) * (float) Math.cos(Math.toRadians(pitch));
-
-        return forward.normalize();
-    }
-
-    private void updateViewMatrix() {
+    public void updateViewMatrix() {
         view.identity();
         view.lookAt(
                 position,
@@ -95,5 +86,13 @@ public class Camera3D {
 
     public Vector3f getPosition() {
         return position;
+    }
+
+    public Vector3f getForward() {
+        return front;
+    }
+
+    public Vector3f getRight() {
+        return right;
     }
 }

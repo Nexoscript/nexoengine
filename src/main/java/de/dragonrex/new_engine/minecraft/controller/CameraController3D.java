@@ -1,4 +1,4 @@
-package de.dragonrex.new_engine.example;
+package de.dragonrex.new_engine.minecraft.controller;
 
 import de.dragonrex.new_engine.camera.Camera3D;
 import de.dragonrex.new_engine.input.Input;
@@ -15,7 +15,7 @@ public class CameraController3D {
     }
 
     public void update(float deltaTime) {
-        float speed = 3f * deltaTime;
+        float speed = 5f * deltaTime;
 
         if (Input.isKeyPressed(GLFW.GLFW_KEY_W)) {
             camera.moveForward(speed);

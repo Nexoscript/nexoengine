@@ -1,4 +1,4 @@
-package de.dragonrex.new_engine.example;
+package de.dragonrex.new_engine.minecraft.controller;
 
 import de.dragonrex.new_engine.camera.Camera3D;
 import de.dragonrex.new_engine.input.Mouse;

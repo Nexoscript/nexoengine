@@ -39,8 +39,17 @@ public class Mouse {
     public static double getX() { return x; }
     public static double getY() { return y; }
 
-    public static double getDeltaX() { return deltaX; }
-    public static double getDeltaY() { return deltaY; }
+    public static double getDeltaX() {
+        double value = deltaX;
+        deltaX = 0;
+        return value;
+    }
+
+    public static double getDeltaY() {
+        double value = deltaY;
+        deltaY = 0;
+        return value;
+    }
 
     public static boolean isButtonDown(int button) {
         return pressedButtons.contains(button);
