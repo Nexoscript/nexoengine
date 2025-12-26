@@ -1,64 +1,42 @@
 package de.dragonrex.engine.input;
 
-import org.lwjgl.glfw.GLFW;
+import static org.lwjgl.glfw.GLFW.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
-public class Mouse {
+public final class Mouse {
 
     private static double x, y;
     private static double lastX, lastY;
-    private static double deltaX, deltaY;
-    private static double scrollY;
+    private static boolean[] buttons = new boolean[GLFW_MOUSE_BUTTON_LAST];
 
-    private static Set<Integer> pressedButtons = new HashSet<>();
+    private Mouse() {}
 
-    public static void init(long window) {
+    static void init(long window) {
 
-        GLFW.glfwSetCursorPosCallback(window, (w, xpos, ypos) -> {
-            lastX = x;
-            lastY = y;
+        glfwSetCursorPosCallback(window, (w, xpos, ypos) -> {
             x = xpos;
             y = ypos;
-
-            deltaX = x - lastX;
-            deltaY = y - lastY;
         });
 
-        GLFW.glfwSetMouseButtonCallback(window, (w, button, action, mods) -> {
-            if (action == GLFW.GLFW_PRESS) pressedButtons.add(button);
-            if (action == GLFW.GLFW_RELEASE) pressedButtons.remove(button);
+        glfwSetMouseButtonCallback(window, (w, button, action, mods) -> {
+            if (button >= 0 && button < buttons.length) {
+                buttons[button] = action != GLFW_RELEASE;
+            }
         });
+    }
 
-        GLFW.glfwSetScrollCallback(window, (w, xoffset, yoffset) -> {
-            scrollY += yoffset;
-        });
+    static void update() {
+        lastX = x;
+        lastY = y;
     }
 
     public static double getX() { return x; }
     public static double getY() { return y; }
 
-    public static double getDeltaX() {
-        double value = deltaX;
-        deltaX = 0;
-        return value;
-    }
+    public static double getDeltaX() { return x - lastX; }
+    public static double getDeltaY() { return y - lastY; }
 
-    public static double getDeltaY() {
-        double value = deltaY;
-        deltaY = 0;
-        return value;
-    }
-
-    public static boolean isButtonDown(int button) {
-        return pressedButtons.contains(button);
-    }
-
-    public static double consumeScrollY() {
-        double value = scrollY;
-        scrollY = 0;
-        return value;
+    public static boolean isDown(int button) {
+        return buttons[button];
     }
 }
 

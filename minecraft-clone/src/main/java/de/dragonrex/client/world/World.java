@@ -1,77 +1,32 @@
 package de.dragonrex.client.world;
 
-import de.dragonrex.engine.engine.GameObjectManager3D;
-import de.dragonrex.client.block.Block;
-import de.dragonrex.client.block.BlockType;
-import de.dragonrex.client.chunk.Chunk;
-import de.dragonrex.client.chunk.ChunkMeshBuilder;
-import de.dragonrex.client.chunk.ChunkObject;
-import de.dragonrex.engine.shader.Mesh;
-import de.dragonrex.engine.shader.Shader;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class World {
-    private int chunksX, chunksZ;
-    private List<ChunkObject> chunks;
-    private ChunkMeshBuilder chunkMeshBuilder;
-    private Shader shader;
 
-    public World(int chunksX, int chunksZ, Shader shader) {
-        this.chunksX = chunksX;
-        this.chunksZ = chunksZ;
-        this.shader = shader;
-        this.chunks = new ArrayList<>();
-        this.chunkMeshBuilder = new ChunkMeshBuilder();
+    private final Map<ChunkPos, Chunk> chunks = new HashMap<>();
+
+    public Chunk getChunk(int cx, int cz) {
+        ChunkPos pos = new ChunkPos(cx, cz);
+        return chunks.computeIfAbsent(pos, Chunk::new);
     }
 
-    public void generateChunks() {
-        for (int cx = 0; cx < chunksX; cx++) {
-            for (int cz = 0; cz < chunksZ; cz++ ) {
+    public BlockType getBlock(int wx, int wy, int wz) {
 
-                Chunk chunk = new Chunk();
-                for (int x = 0; x < chunk.getSize(); x++) {
-                    for (int y = 0; y < chunk.getSize(); y++) {
-                        for (int z = 0; z < chunk.getSize(); z++) {
-                            if(y < 5) {
-                                chunk.setBlock(x, y, z, new Block(x, y, z, BlockType.STONE));
-                            } else if (y < 9) {
-                                chunk.setBlock(x, y, z, new Block(x, y, z, BlockType.DIRT));
-                            } else if (y == 9) {
-                                chunk.setBlock(x, y, z, new Block(x, y, z, BlockType.GRASS));
-                            }
-                            // y >= 10: Luft (null)
-                        }
-                    }
-                }
+        if (wy < 0 || wy >= Chunk.HEIGHT)
+            return BlockType.AIR;
 
-                Mesh mesh = this.chunkMeshBuilder.buildMesh(chunk);
+        int cx = Math.floorDiv(wx, Chunk.SIZE);
+        int cz = Math.floorDiv(wz, Chunk.SIZE);
 
-                float worldX = cx * chunk.getSize();
-                float worldZ = cz * chunk.getSize();
+        Chunk chunk = getChunk(cx, cz);
+        if (chunk == null)
+            return BlockType.AIR;
 
-                ChunkObject chunkObject = new ChunkObject(worldX, 0f, worldZ, mesh, shader, chunk);
-                chunks.add(chunkObject);
-                GameObjectManager3D.add(chunkObject);
-            }
-        }
-    }
+        int bx = Math.floorMod(wx, Chunk.SIZE);
+        int bz = Math.floorMod(wz, Chunk.SIZE);
 
-    public List<ChunkObject> getChunks() {
-        return chunks;
-    }
-
-    public void setBlock(int worldX, int worldY, int worldZ, BlockType type) {
-        int chunkX = worldX / Chunk.CHUNK_SIZE;
-        int chunkZ = worldZ / Chunk.CHUNK_SIZE;
-        int localX = worldX % Chunk.CHUNK_SIZE;
-        int localZ = worldZ % Chunk.CHUNK_SIZE;
-
-        ChunkObject chunkObject = chunks.get(chunkZ * chunksX + chunkX);
-        chunkObject.getChunk().setBlock(localX, worldY, localZ, new Block(localX, worldY, localZ, type));
-
-        Mesh newMesh = this.chunkMeshBuilder.buildMesh(chunkObject.getChunk());
-        chunkObject.setMesh(newMesh);
+        return chunk.getBlock(bx, wy, bz);
     }
 }
