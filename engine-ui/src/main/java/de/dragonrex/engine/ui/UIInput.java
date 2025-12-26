@@ -1,4 +1,4 @@
 package de.dragonrex.engine.ui;
 
-public class Button {
+public class UIInput {
 }

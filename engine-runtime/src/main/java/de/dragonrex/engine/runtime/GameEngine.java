@@ -12,7 +12,7 @@ import javax.swing.*;
 public class GameEngine {
 
     private boolean running;
-    public static Window window;
+    public Window window;
     public WindowConfig config;
 
     private long lastFrameTime;

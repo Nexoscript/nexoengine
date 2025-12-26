@@ -9,10 +9,14 @@ import org.lwjgl.opengl.GL11;
 public class Window {
 
     private long handle;
-    private final WindowConfig config;
+    private static WindowConfig config = new WindowConfig();
 
-    public Window(WindowConfig config) {
-        this.config = config;
+    public static int getWidth() {
+        return config.width;
+    }
+
+    public static int getHeight() {
+        return config.height;
     }
 
     public void create() {
@@ -41,6 +45,8 @@ public class Window {
         GL11.glViewport(0, 0, config.width, config.height);
         glfwSetFramebufferSizeCallback(handle, (window, width, height) -> {
             GL11.glViewport(0, 0, width, height);
+            config.width = width;
+            config.height = height;
         });
 
         glfwSwapInterval(config.vsync ? 1 : 0);
