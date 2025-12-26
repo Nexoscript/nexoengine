@@ -11,7 +11,6 @@ Der Fokus liegt auf **klarer Architektur**, **sauberer Trennung von Verantwortli
 - Szenen-System (`Scene`, `SceneManager`)
 - GameObject / Component-Architektur
 - Transform-System (Position, Rotation, Scale)
-- Zeitverwaltung (`Time`)
 - Saubere Trennung von Core & Systemen
 
 ### Window & Input
@@ -43,32 +42,6 @@ Der Fokus liegt auf **klarer Architektur**, **sauberer Trennung von Verantwortli
 
 ---
 
-## 🧱 Projektstruktur (Module)
-
-NexoEngine
-│
-├── engine-core
-│ └── Core-Logik (Scene, GameObject, Component, Transform)
-│
-├── engine-window
-│ └── Window & Input (GLFW)
-│
-├── engine-rendering
-│ └── Rendering, Meshes, Shader, Materialien, Kameras
-│
-├── engine-runtime
-│ └── GameEngine (Bootstrap & Main Loop)
-│
-├── engine-testbed
-│ └── Test-Szenen für Engine-Features
-│
-└── minecraft-clone (experimentell)
-
-yaml
-Code kopieren
-
----
-
 ## 🧠 Architektur-Prinzipien
 
 - **engine-core** kennt kein Rendering und kein Window
@@ -97,9 +70,8 @@ Code kopieren
 ## 🚀 Starten (Testbed)
 
 1. Repository klonen
-2. Projekt als **Multi-Module-Gradle-Projekt** öffnen
-3. `engine-testbed` als Run-Konfiguration wählen
-4. `GameEngine` starten
+2. Projekt als **Multi-Module-Maven-Projekt** öffnen
+3. `engine-testbed` TestBed Main starten
 
 ---
 
