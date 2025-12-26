@@ -5,7 +5,7 @@ import java.util.List;
 
 public class GameObject {
 
-    private final List<Component> components = new ArrayList<>();
+    private List<Component> components = new ArrayList<>();
 
     public void addComponent(Component component) {
         component.setGameObject(this);

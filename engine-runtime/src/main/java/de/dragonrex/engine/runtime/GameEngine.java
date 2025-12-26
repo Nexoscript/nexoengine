@@ -1,10 +1,13 @@
-package de.dragonrex.engine.core;
+package de.dragonrex.engine.runtime;
 
 import de.dragonrex.engine.core.scene.Scene;
 import de.dragonrex.engine.core.scene.SceneManager;
 import de.dragonrex.engine.input.Input;
+import de.dragonrex.engine.rendering.RenderSystem;
 import de.dragonrex.engine.window.Window;
 import de.dragonrex.engine.window.WindowConfig;
+
+import javax.swing.*;
 
 public class GameEngine {
 
@@ -47,6 +50,7 @@ public class GameEngine {
             SceneManager.update(delta);
             Input.update();
             SceneManager.render();
+            RenderSystem.render();
 
             window.update();
         }

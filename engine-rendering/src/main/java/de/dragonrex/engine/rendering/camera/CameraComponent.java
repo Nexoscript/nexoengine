@@ -19,6 +19,7 @@ public class CameraComponent extends Component {
 
     @Override
     public void start() {
+        CameraSystem.register(this);
         updateProjection();
     }
 

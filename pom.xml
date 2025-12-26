@@ -15,6 +15,7 @@
         <module>engine-physics</module>
         <module>engine-ui</module>
         <module>engine-testbed</module>
+        <module>engine-runtime</module>
     </modules>
 
     <properties>

@@ -2,8 +2,6 @@ package de.dragonrex.engine.window;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-import de.dragonrex.engine.core.scene.SceneManager;
-import de.dragonrex.engine.rendering.camera.CameraComponent;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -43,13 +41,6 @@ public class Window {
         GL11.glViewport(0, 0, config.width, config.height);
         glfwSetFramebufferSizeCallback(handle, (window, width, height) -> {
             GL11.glViewport(0, 0, width, height);
-
-            if (SceneManager.getActiveScene() != null) {
-                CameraComponent cam = SceneManager.getActiveScene().getActiveCamera();
-                if (cam != null) {
-                    cam.setAspect((float) width / (float) height);
-                }
-            }
         });
 
         glfwSwapInterval(config.vsync ? 1 : 0);

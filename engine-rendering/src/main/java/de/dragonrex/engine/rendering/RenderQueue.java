@@ -1,6 +1,6 @@
 package de.dragonrex.engine.rendering;
 
-import de.dragonrex.engine.rendering.mesh.MeshRenderer;
+import de.dragonrex.engine.rendering.primitives.MeshRenderer;
 
 import java.util.ArrayList;
 import java.util.List;

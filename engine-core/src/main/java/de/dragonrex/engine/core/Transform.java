@@ -52,5 +52,11 @@ public class Transform extends Component {
     public Vector3f getPosition() { return position; }
     public Vector3f getRotation() { return rotation; }
     public Vector3f getScale() { return scale; }
+
+    public List<Transform> getChildren() { return children; }
+
+    public void setPosition(Vector3f position) { this.position.set(position); }
+    public void setRotation(Vector3f rotation) { this.rotation.set(rotation); }
+    public void setScale(Vector3f scale) { this.scale.set(scale); }
 }
 

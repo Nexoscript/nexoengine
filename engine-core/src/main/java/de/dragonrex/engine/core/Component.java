@@ -4,7 +4,7 @@ public abstract class Component {
 
     protected GameObject gameObject;
 
-    void setGameObject(GameObject obj) {
+    public void setGameObject(GameObject obj) {
         this.gameObject = obj;
     }
 
